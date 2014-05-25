@@ -1,6 +1,6 @@
 angular.module('F1FeederApp.controllers', []).
 
-  /* Drivers controller */
+    /* Drivers controller */
   controller('driversController', function($scope, ergastAPIservice) {
     $scope.nameFilter = null;
     $scope.driversList = [];
@@ -14,6 +14,19 @@ angular.module('F1FeederApp.controllers', []).
         $scope.driversList = response.MRData.StandingsTable.StandingsLists[0].DriverStandings;
     });
   }).
+  
+  /* login controller */
+  controller('loginController', function($scope, $routeParams, ergastAPIservice) {
+    console.log("in controller login");
+    $scope.login = function (user, password) {
+    	ergastAPIservice.login(user, password).success(function (response) {
+        	console.log("in login success");
+    	});
+    }
+  }). 
+
+
+
 
   /* Driver controller */
   controller('driverController', function($scope, $routeParams, ergastAPIservice) {
@@ -29,3 +42,4 @@ angular.module('F1FeederApp.controllers', []).
         $scope.races = response.MRData.RaceTable.Races; 
     }); 
   });
+  
