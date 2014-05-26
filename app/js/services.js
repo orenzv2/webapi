@@ -24,13 +24,37 @@ angular.module('F1FeederApp.services', [])
       });
     }
 
-    ergastAPI.login = function(id) {
+    ergastAPI.login = function(user,password) {
       console.log("in service login");
+      var key = CryptoJS.enc.Hex.parse('553246736447566b5831414273664835396647324f494459505a536a5939774c')
+    //  var key =                      'U2FsdGVkX1ABsfH59fG2OIDYPZSjY9wL';
+      //"encryption_key"
+      //var iv  = "%032d" % 0;
+      var iv  = CryptoJS.enc.Hex.parse('0000000000000000000000000000000000000000000000000000000000000000');
+      
+      //var iv  = CryptoJS.enc.Hex.parse('101112131415161718191a1b1c1d1e1f');
+      var prefix = (new Date).getTime() / 1000;
+     // var prefix =1401093435 ;
+      prefix = Math.round(prefix);
+      var encrypted = CryptoJS.AES.encrypt(prefix + ".testing123", key, { iv: iv });
+      b64 = atob(encrypted.toString());
+      console.log(b64);
+      console.log("key is " + encrypted.key.words.toString(16));
+      console.log("encrypted is" + encrypted.toString());     
+      var base64 = CryptoJS.enc.Base64.stringify(encrypted.ciphertext);
+      console.log("iv is" + iv);
+
+      
       return $http({
-        method: 'POST', 
+        method:'PUT',
+	data: { 'name' : 'auto_test_csmgr' , 'ios_password':'hnsRMBucRa8Rqr9Bjb1efwXSAa4YHJx9dVf7mactNLM='},
         url: 'http://127.0.0.1:8081/api/login'
       });
+     /* return $http({
+        method:'GET',
+        url: 'http://127.0.0.1:8081/api/customers',
+	data: {'page' :'2'}
+      });*/
     }
-
     return ergastAPI;
   });
