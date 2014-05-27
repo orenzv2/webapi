@@ -1,0 +1,42 @@
+<head>
+  <style>
+
+     .armedClass {
+        background-color:#ff0000;
+        color:white;
+     }
+
+     .unarmedClass {
+         background-color:#3ab44a;
+         color:white;
+     }
+  </style>
+  </head>
+  
+<body>
+
+<div ng-model='arm_status' ng-show="arm_status == ''">
+    Loading. Please wait...
+</div>
+
+<div ng-model='arm_status' ng-show="arm_status != ''">
+
+  <form name="form" class="css-form" novalidate>
+    <div>
+            status is {{arm_status}}
+    </div>
+    <div>
+	    Pin code: <input type='text' ng-model='pinCode' />
+    </div>    
+    <div>
+    <button ng-show="arm_status != DISARMED" class="unarmedClass" ng-click='change_arm(DISARMED)'
+            >Disarm</button>
+    <button ng-show="arm_status == DISARMED" class="armedClass" ng-click='change_arm(ARMED_AWAY)'
+            >Arm away</button>
+    <button ng-show="arm_status == DISARMED" class="armedClass" ng-click='change_arm(ARMED_STAY)'
+            >Arm stay</button>	    	   
+   </div>    
+  </form>
+</div>
+
+<body>

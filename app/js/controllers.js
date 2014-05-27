@@ -25,7 +25,30 @@ angular.module('F1FeederApp.controllers', []).
     }
   }). 
 
-
+  /* login controller */
+  controller('armController', function($scope, $routeParams, ergastAPIservice) {
+    console.log("in controller arm");
+    $scope.DISARMED = 'Disarmed';
+    $scope.ARMED_AWAY = 'Armed away';
+    $scope.ARMED_STAY = 'Armed stay';
+    $scope.arm_status = '';
+    $scope.pinCode = "";
+    
+    
+    ergastAPIservice.getDrivers().success(function (response) {
+        //Digging into the response to get the relevant data
+        $scope.arm_status = $scope.DISARMED;
+    }).
+    error(function(data, status, headers, config) {
+        $scope.error_message = "Error " + status + ".Please try again.";
+    });
+    
+    $scope.change_arm = function (request) {
+        console.log("in change_arm function pincode is " + $scope.pinCode);		
+    	$scope.arm_status = request;
+	$scope.pinCode = "";
+    }
+  }). 
 
 
   /* Driver controller */
